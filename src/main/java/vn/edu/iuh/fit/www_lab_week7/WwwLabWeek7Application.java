@@ -10,4 +10,5 @@ public class WwwLabWeek7Application {
 		SpringApplication.run(WwwLabWeek7Application.class, args);
 	}
 
+
 }
