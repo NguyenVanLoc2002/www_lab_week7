@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách hóa đơn theo ngày</title>
+</head>
+<body>
+<form action="/orders/date" method="get">
+    <label th:for="date">Chọn ngày: </label>
+    <input th:id="date" name="orderDate" type="date">
+    <button type="submit">Submit</button>
+</form>
+<h2>Danh sách hóa đơn</h2>
+<div th:each="order : ${orderList}">
+    Tên nhân viên: <span th:text="${order.getEmployee().fullname}"></span><br>
+    Tên khách hàng: <span th:text="${order.getCustomer().name}"></span><br>
+    Địa chỉ khách hàng: <span th:text="${order.getCustomer().address}"></span><br>
+    SĐT khách hàng: <span th:text="${order.getCustomer().phone}"></span><br>
+    Email khách hàng: <span th:text="${order.getCustomer().email}"></span><br>
+    Ngày lập hóa đơn: <span th:text="${order.getOrderDate()}"></span><br><br><br>
+</div>
+</body>
+</html>

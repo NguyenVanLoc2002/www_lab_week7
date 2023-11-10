@@ -30,12 +30,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(long order_id, LocalDateTime orderDate, Employee employee, Customer customer) {
-        this.order_id = order_id;
+    public Order(LocalDateTime orderDate, Employee employee, Customer customer) {
         this.orderDate = orderDate;
         this.employee = employee;
         this.customer = customer;
     }
+
 
     public long getOrder_id() {
         return order_id;

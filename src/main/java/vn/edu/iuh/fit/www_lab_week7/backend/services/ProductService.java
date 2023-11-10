@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.www_lab_week7.backend.models.Product;
 import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.ProductRepository;
 
+import java.util.Optional;
+
 @Service
 public class ProductService {
     @Autowired
@@ -19,4 +21,17 @@ public class ProductService {
         Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
         return productRepository.findAll(pageable);
     }
+
+    public void saveProduct(Product product){
+        productRepository.save(product);
+    }
+
+    public void deleteProductById(Long id){
+        productRepository.deleteById(id);
+    }
+
+    public Optional<Product> findById(Long id){
+        return productRepository.findById(id);
+    }
+
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:switch="${productPage}">
+    <h2 th:case="null">Not products yet</h2>
+    <div th:case="*">
+        <h2>Danh sách sản phẩm</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Unit</th>
+                <th>
+                    <a class="btn btn-dark" th:href="@{/addProduct}">Insert</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product, iStat : ${productPage.content}"
+                th:style="${iStat.odd} ? 'font-weight:bold'"
+                th:alt-title="${iStat.even}? 'even': 'odd' ">
+                <td th:text="${product.product_id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.manufacturer}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.status}"></td>
+                <td th:text="${product.unit}"></td>
+                <td class="d-lg-inline-flex">
+                    <a class="btn btn-primary" th:href="@{/edit/{id}(id=${product.product_id})}">Edit</a>
+                    <a class="btn btn-danger" th:href="@{/delete/{id}(id=${product.product_id})}" >Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-inline-grid" th:if="${productPage.totalPages>0}" th:each="pageNumber : ${pageNumbers}">
+            <a th:href="@{/products(size=${productPage.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == productPage.number +1} ? active"></a>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

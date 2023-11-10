@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit product</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Cập nhật sản phẩm</h1>
+<form class="m-4" action="/editProduct" method="post" th:object="${product}">
+    <label th:for="name">Name: </label>
+    <input th:id="name" th:field="*{name}"><br><br>
+
+    <label th:for="manufacturer_name">Manufacturer: </label>
+    <input th:id="manufacturer_name" th:field="*{manufacturer}"><br><br>
+
+    <label th:for="description">Description: </label><br>
+    <textarea th:id="description" th:field="*{description}" rows="5" cols="50"></textarea><br><br>
+
+    <label th:for="status">Status: </label>
+    <select th:id="status" th:field="*{status}">
+        <option th:each="st : ${productStatuses}" th:value="${st}" th:text="${st}"></option>
+    </select><br><br>
+
+    <label th:for="unit">Unit: </label>
+    <input th:id="unit" th:field="*{unit}"><br><br>
+
+    <input type="hidden" th:field="*{product_id}">
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-danger" type="reset">Reset</button>
+
+
+</form>
+
+<script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

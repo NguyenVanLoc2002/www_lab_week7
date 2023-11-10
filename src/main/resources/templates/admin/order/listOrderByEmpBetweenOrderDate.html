@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách hóa đơn theo nhân viên trong 1 khoảng thời gian</title>
+</head>
+<body>
+<form action="/orders/emp-and-date" method="get">
+        <label th:for="startDate">Chọn ngày bắt đầu: </label>
+        <input th:id="startDate" name="startDate" type="date">
+        <label th:for="endDate">Chọn ngày kết thúc: </label>
+        <input th:id="endDate" name="endDate" type="date">
+        <button type="submit">Tìm nhân viên</button>
+</form>
+<h2>Danh sách nhân viên có đơn hàng trong ngày đã chọn</h2>
+<form action="/orders/emp-by-date" method="get">
+    <label th:for="selEmp">Chọn nhân viên: </label>
+    <select th:id="selEmp" name="selEmp">
+        <option th:each="emp: ${employees}" th:value="${emp.id}" th:text="${emp.fullname}"></option>
+    </select>
+    <button type="submit">Tìm đơn hàng</button>
+</form>
+<h2>Danh sách hóa đơn theo nhân viên trong 1 khoảng thời gian</h2>
+<div th:each="od : ${orderList}">
+    Tên nhân viên: <span th:text="${od.getEmployee().fullname}"></span><br>
+    Tên khách hàng: <span th:text="${od.getCustomer().name}"></span><br>
+    Địa chỉ khách hàng: <span th:text="${od.getCustomer().address}"></span><br>
+    SĐT khách hàng: <span th:text="${od.getCustomer().phone}"></span><br>
+    Email khách hàng: <span th:text="${od.getCustomer().email}"></span><br>
+    Ngày lập hóa đơn: <span th:text="${od.getOrderDate()}"></span><br><br><br>
+</div>
+
+</body>
+</html>
