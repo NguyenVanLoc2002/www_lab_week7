@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Danh sách hóa đơn theo nhân viên trong 1 khoảng thời gian</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
 </head>
 <body>
 <form action="/orders/emp-and-date" method="get">
@@ -12,23 +13,48 @@
         <input th:id="endDate" name="endDate" type="date">
         <button type="submit">Tìm nhân viên</button>
 </form>
-<h2>Danh sách nhân viên có đơn hàng trong ngày đã chọn</h2>
-<form action="/orders/emp-by-date" method="get">
-    <label th:for="selEmp">Chọn nhân viên: </label>
-    <select th:id="selEmp" name="selEmp">
-        <option th:each="emp: ${employees}" th:value="${emp.id}" th:text="${emp.fullname}"></option>
-    </select>
-    <button type="submit">Tìm đơn hàng</button>
-</form>
-<h2>Danh sách hóa đơn theo nhân viên trong 1 khoảng thời gian</h2>
-<div th:each="od : ${orderList}">
-    Tên nhân viên: <span th:text="${od.getEmployee().fullname}"></span><br>
-    Tên khách hàng: <span th:text="${od.getCustomer().name}"></span><br>
-    Địa chỉ khách hàng: <span th:text="${od.getCustomer().address}"></span><br>
-    SĐT khách hàng: <span th:text="${od.getCustomer().phone}"></span><br>
-    Email khách hàng: <span th:text="${od.getCustomer().email}"></span><br>
-    Ngày lập hóa đơn: <span th:text="${od.getOrderDate()}"></span><br><br><br>
+<!--<h2>Danh sách nhân viên có đơn hàng trong ngày đã chọn</h2>-->
+<!--<form action="/orders/emp-by-date" method="get">-->
+<!--    <label th:for="selEmp">Chọn nhân viên: </label>-->
+<!--    <select th:id="selEmp" name="selEmp">-->
+<!--        <option th:each="emp: ${employees}" th:value="${emp.id}" th:text="${emp.fullname}"></option>-->
+<!--    </select>-->
+<!--    <button type="submit">Tìm đơn hàng</button>-->
+<!--</form>-->
+<div th:switch="${employees}">
+    <h2 th:case="null">Not emplyee yet</h2>
+    <div th:case="*">
+        <h2>Danh sách nhân viên</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Day of birth</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="emp, iStat : ${employees}"
+                th:style="${iStat.odd} ? 'font-weight:bold'"
+                th:alt-title="${iStat.even}? 'even': 'odd' ">
+                <td th:text="${emp.id}"></td>
+                <td th:text="${emp.fullname}"></td>
+                <td th:text="${emp.dob}"></td>
+                <td th:text="${emp.phone}"></td>
+                <td th:text="${emp.address}"></td>
+                <td th:text="${emp.status}"></td>
+                <td class="d-lg-inline-flex">
+                    <a class="btn btn-primary" th:href="@{/orders/emp-by-date/{id}(id=${emp.id})}">View</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
 </body>
 </html>

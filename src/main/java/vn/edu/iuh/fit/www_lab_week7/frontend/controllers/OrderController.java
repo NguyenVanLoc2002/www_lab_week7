@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import vn.edu.iuh.fit.www_lab_week7.backend.models.Employee;
 import vn.edu.iuh.fit.www_lab_week7.backend.models.Order;
 import vn.edu.iuh.fit.www_lab_week7.backend.services.OrderService;
@@ -48,16 +49,14 @@ public class OrderController {
         return "admin/order/listOrderByEmpBetweenOrderDate";
     }
 
-    @GetMapping("/orders/emp-by-date")
-    public String showOrdersByEmployeeBetweenOrderDate(HttpServletRequest request, Model model,HttpSession session){
+    @GetMapping("/orders/emp-by-date/{id}")
+    public String showOrdersByEmployeeBetweenOrderDate(@PathVariable("id") Long id, Model model,HttpSession session){
         LocalDate startDate = (LocalDate) session.getAttribute("startDate") ;
         LocalDate endDate = (LocalDate) session.getAttribute("endDate") ;
-        List<Employee> employees = orderService.findEmpIdByBetweenOrderDate(startDate,endDate);
 
-        Long id = Long.parseLong(request.getParameter("selEmp"));
         List<Order> orderList = orderService.findOrdersByEmpIdBetweenOrderDate(startDate,endDate,id);
         model.addAttribute("orderList",orderList);
-        return "admin/order/listOrderByEmpBetweenOrderDate";
+        return "admin/order/listDetailOrderByEmpBetweenOrderDate";
     }
 
 }

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.www_lab_week7.backend.enums.ProductStatus;
 import vn.edu.iuh.fit.www_lab_week7.backend.models.Product;
+import vn.edu.iuh.fit.www_lab_week7.backend.models.ProductImage;
+import vn.edu.iuh.fit.www_lab_week7.backend.services.ProductImageService;
 import vn.edu.iuh.fit.www_lab_week7.backend.services.ProductService;
 
 import java.util.List;
@@ -18,6 +20,9 @@ import java.util.stream.IntStream;
 public class ProductController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductImageService productImageService;
 
     @GetMapping("/products")
     public String showListProduct(Model model,
@@ -79,6 +84,21 @@ public class ProductController {
             existingProduct.setUnit(product.getUnit());
             productService.saveProduct(existingProduct);
         }
+        return "redirect:/products";
+    }
+
+    @GetMapping("/insert_details/{id}")
+    public String showFormInsertDetailsProduct(Model model, @PathVariable("id") Long id){
+        Product product = productService.findById(id).get();
+        model.addAttribute("product",product);
+        model.addAttribute("product_image", new ProductImage());
+        return "admin/product/addDetailsProduct";
+    }
+
+    @PostMapping("/addProductDetails/new")
+    public String addProductDetails(
+            @ModelAttribute("product_image") ProductImage productImage){
+        productImageService.insertProductDetails(productImage);
         return "redirect:/products";
     }
 }
