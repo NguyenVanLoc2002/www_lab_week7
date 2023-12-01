@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.www_lab_week7;
 
+import jakarta.persistence.PersistenceContext;
 import net.datafaker.Faker;
 import net.datafaker.providers.base.Device;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import vn.edu.iuh.fit.www_lab_week7.backend.enums.EmployeeStatus;
 import vn.edu.iuh.fit.www_lab_week7.backend.enums.ProductStatus;
-import vn.edu.iuh.fit.www_lab_week7.backend.models.Customer;
-import vn.edu.iuh.fit.www_lab_week7.backend.models.Employee;
-import vn.edu.iuh.fit.www_lab_week7.backend.models.Order;
-import vn.edu.iuh.fit.www_lab_week7.backend.models.Product;
-import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.CustomerRepository;
-import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.EmployeeRepository;
-import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.OrderRepository;
-import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.ProductRepository;
+import vn.edu.iuh.fit.www_lab_week7.backend.models.*;
+import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -42,7 +38,13 @@ public class WwwLabWeek7Application {
     @Autowired
     private OrderRepository orderRepository;
 
-//    @Bean
+    @Autowired
+    private ProductImageRepository productImageRepository;
+
+    @Autowired
+    private ProductPriceRepository productPriceRepository;
+
+    //    @Bean
     CommandLineRunner createSampleCustomersAndEmployees() {
         return args -> {
             Faker faker = new Faker();
@@ -96,7 +98,7 @@ public class WwwLabWeek7Application {
         };
     }
 
-//    @Bean
+    //    @Bean
     CommandLineRunner creteSampleProduct() {
         return args -> {
             Faker faker = new Faker();
@@ -114,4 +116,52 @@ public class WwwLabWeek7Application {
             }
         };
     }
+
+//    @Bean
+    CommandLineRunner creteSampleProductImgage() {
+        return args -> {
+            List<Product> products = productRepository.findAll();
+
+            if (!products.isEmpty()) {
+                Faker faker = new Faker();
+                Random rnd = new Random();
+
+                for (Product product : products) {
+                    ProductImage productImage = new ProductImage();
+                    productImage.setPath(faker.internet().image());
+                    productImage.setAlternative(faker.lorem().sentence());
+                    productImage.setProduct(product);
+
+                    productImageRepository.save(productImage);
+                }
+            }
+        };
+    }
+
+
+//    @Bean
+//    CommandLineRunner creteSampleProductPrice() {
+//        return args -> {
+//            List<Product> products = productRepository.findAll();
+//
+//            if (!products.isEmpty()) {
+//                Faker faker = new Faker();
+//                Random rnd = new Random();
+//
+//                for (Product product : products) {
+//                    LocalDateTime priceDateTime = LocalDateTime.now().minusDays(rnd.nextInt(30));
+//                    double price = 10 + rnd.nextDouble() *  (5000 - 10); // Giá ngẫu nhiên từ 10 đến 100
+//                    String note = faker.lorem().sentence();
+//
+//                    ProductPrice productPrice = new ProductPrice();
+//                    productPrice.setProduct(product);
+//                    productPrice.setPrice_date_time(priceDateTime);
+//                    productPrice.setPrice(price);
+//                    productPrice.setNote(note);
+//
+//                    productPriceRepository.save(productPrice);
+//                }
+//            }
+//        };
+//    }
 }

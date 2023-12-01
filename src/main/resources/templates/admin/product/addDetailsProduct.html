@@ -13,13 +13,11 @@
     <h4>Trạng thái: <span th:text="${product.status}"></span></h4>
     <!-- Thêm nút chọn ảnh -->
     <label th:for="imageInput">Chọn ảnh:</label>
-    <input type="file" th:id="imageInput" name="image" accept="image/*" > <br><br>
+    <input type="file" th:id="imageInput" name="image" accept="image/*" th:field="*{path}"> <br><br>
 
     <label th:for="alt">Thông tin thay thế: </label>
     <input th:id="alt" name="alternative" th:field="*{alternative}"><br><br>
 
-    <!-- Hiển thị đường dẫn của ảnh sau khi chọn -->
-    <input type="hidden"  name="selectedImage" th:field="*{path}">
 
     <button class="btn btn-primary" type="submit">Thêm</button>
 </form>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.www_lab_week7.backend.models.ProductImage;
 import vn.edu.iuh.fit.www_lab_week7.backend.reponsitory.ProductImageRepository;
 
+import java.util.List;
+
 @Service
 public class ProductImageService {
 
@@ -13,5 +15,9 @@ public class ProductImageService {
 
     public void insertProductDetails(ProductImage productImage){
         productImageRepository.save(productImage);
+    }
+
+    public List<ProductImage> findAll(){
+        return productImageRepository.findAll();
     }
 }

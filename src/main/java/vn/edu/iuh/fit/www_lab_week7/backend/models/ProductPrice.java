@@ -21,6 +21,8 @@ public class ProductPrice {
     @Column(name = "note")
     private String note;
 
+
+
     public ProductPrice() {
     }
 
