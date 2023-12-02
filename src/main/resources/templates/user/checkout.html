@@ -22,7 +22,7 @@
     <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
-                <div class="card mb-4" >
+                <div class="card mb-4">
                     <div class="card-header py-3" th:if="${lstCartItem}!=null">
                         <h5 class="mb-0" th:text="'Cart - ' + ${#lists.size(lstCartItem)} + ' items'"></h5>
                     </div>
@@ -34,9 +34,10 @@
                         <div class="row" th:if="${lstCartItem}!=null" th:each="item: ${lstCartItem}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <!-- Image -->
-                                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                                <div class="bg-image hover-overlay hover-zoom ripple rounded"
+                                     data-mdb-ripple-color="light">
                                     <img th:src="${item.productInfo.imagePath}"
-                                         class="w-100" alt="Blue Jeans Jacket" />
+                                         class="w-100" alt="Blue Jeans Jacket"/>
                                     <a href="#!">
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                     </a>
@@ -60,21 +61,26 @@
 
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                 <!-- Quantity -->
-                                <div class="d-flex mb-4" style="max-width: 300px">
-                                    <button class="btn btn-primary px-3 me-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                                <div class="d-flex justify-content-between align-items-center mb-4"
+                                     style="max-width: 300px">
+                                    <form method="post" action="/updateQuantity" class="d-flex align-items-center">
+                                        <input type="hidden" name="productId" th:value="${item.productInfo.productId}"/>
 
-                                    <div class="form-outline">
-                                        <input id="form1" min="0" name="quantity" th:value="${item.quantity}" type="number" class="form-control" />
-                                        <label class="form-label" for="form1">Quantity</label>
-                                    </div>
+                                        <button type="submit" class="btn btn-primary px-3 me-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
 
-                                    <button class="btn btn-primary px-3 ms-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                                        <div class="form-outline">
+                                            <input id="form1" min="0" name="quantity" th:value="${item.quantity}"
+                                                   type="number" class="form-control"/>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary px-3 ms-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </form>
                                 </div>
                                 <!-- Quantity -->
 
@@ -84,10 +90,11 @@
                                 </p>
                                 <!-- Price -->
                             </div>
+
                         </div>
                         <!-- Single item -->
 
-                        <hr class="my-4" />
+                        <hr class="my-4"/>
 
 
                     </div>
@@ -103,16 +110,16 @@
                         <p><strong>We accept</strong></p>
                         <img class="me-2" width="45px"
                              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                             alt="Visa" />
+                             alt="Visa"/>
                         <img class="me-2" width="45px"
                              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                             alt="American Express" />
+                             alt="American Express"/>
                         <img class="me-2" width="45px"
                              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                             alt="Mastercard" />
+                             alt="Mastercard"/>
                         <img class="me-2" width="45px"
                              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
-                             alt="PayPal acceptance mark" />
+                             alt="PayPal acceptance mark"/>
                     </div>
                 </div>
             </div>
@@ -144,9 +151,11 @@
                             </li>
                         </ul>
 
-                        <button type="button" class="btn btn-primary btn-lg btn-block">
-                            Go to checkout
-                        </button>
+                        <form action="/checkout" method="get">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                Go to checkout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

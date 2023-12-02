@@ -62,7 +62,7 @@
 <nav class="navbar fixed-top">
     <div class="container">
         <div class="d-flex ms-auto justify-content-end">
-            <a class="navbar-brand" th:href="@{/checkout}">
+            <a class="navbar-brand" th:href="@{/cart}">
                 <i class="fa fa-shopping-cart cart-icon"></i>
                 <span class="badge bg-danger text-white"
                       th:text="${session != null && session.cartItemList != null ? session.cartItemList.size() : 0}"></span>

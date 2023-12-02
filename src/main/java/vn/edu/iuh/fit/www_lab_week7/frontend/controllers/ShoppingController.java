@@ -4,10 +4,10 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.iuh.fit.www_lab_week7.backend.dto.CartItem;
 import vn.edu.iuh.fit.www_lab_week7.backend.dto.ProductInfo;
@@ -35,11 +35,7 @@ public class ShoppingController {
     private ProductPriceRepository productPriceRepository;
 
     @GetMapping("/shopping")
-    public String shopping(Model model) {
-//        List<ProductImage> productImageList = productImageService.findAll();
-//        List<ProductImage> first10ProductImages = productImageList.subList(0, Math.min(productImageList.size(), 10));
-//        model.addAttribute("productImageList",productImageList);
-
+    public String showShopping(Model model) {
         List<ProductInfo> productInfoList = productService.findAllProductInfoWithLatestPrice();
         List<ProductPrice> productPrices = productPriceRepository.findAll();
         List<ProductInfo> productInfos = productInfoList.stream().collect(Collectors.toMap(ProductInfo::getProductId, Function.identity(), (existing, replacement) -> existing)).values().stream().collect(Collectors.toList());
@@ -70,9 +66,9 @@ public class ShoppingController {
 
         boolean found = false;
 
-        for (CartItem cartItem1:list){
-            if(cartItem1.getProductInfo().equals(productInfo)){
-                cartItem1.setQuantity(cartItem1.getQuantity()+1);
+        for (CartItem cartItem1 : list) {
+            if (cartItem1.getProductInfo().equals(productInfo)) {
+                cartItem1.setQuantity(cartItem1.getQuantity() + 1);
                 found = true;
                 break;
             }
@@ -89,8 +85,8 @@ public class ShoppingController {
         return "redirect:/shopping";
     }
 
-    @GetMapping("/checkout")
-    public String checkOut(HttpSession session, Model model) {
+    @GetMapping("/cart")
+    public String showCart(HttpSession session, Model model) {
         List<CartItem> list = (List<CartItem>) session.getAttribute("cartItemList");
         Double totalPrice = productService.calcTotalPrice(list);
 
@@ -100,4 +96,24 @@ public class ShoppingController {
         logger.info("ss: {}", list);
         return "user/checkout";
     }
+
+    @PostMapping("/updateQuantity")
+    public String updateQuantity(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {
+        List<CartItem> list = (List<CartItem>) session.getAttribute("cartItemList");
+        for (CartItem cartItem1 : list) {
+            if (cartItem1.getProductInfo().getProductId().equals(productId)) {
+                cartItem1.setQuantity(quantity);
+            }
+        }
+        logger.info("ss: {}", list);
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/checkout")
+    public String checkOut(HttpSession session) {
+        session.invalidate();
+        return "redirect:/shopping";
+    }
 }
+
+
