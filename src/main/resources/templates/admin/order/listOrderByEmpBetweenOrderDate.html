@@ -8,19 +8,12 @@
 <body>
 <form action="/orders/emp-and-date" method="get">
         <label th:for="startDate">Chọn ngày bắt đầu: </label>
-        <input th:id="startDate" name="startDate" type="date">
+        <input th:id="startDate" name="startDate" type="date" th:value="${session.startDate}">
         <label th:for="endDate">Chọn ngày kết thúc: </label>
-        <input th:id="endDate" name="endDate" type="date">
+        <input th:id="endDate" name="endDate" type="date" th:value="${session.endDate}">
         <button type="submit">Tìm nhân viên</button>
 </form>
-<!--<h2>Danh sách nhân viên có đơn hàng trong ngày đã chọn</h2>-->
-<!--<form action="/orders/emp-by-date" method="get">-->
-<!--    <label th:for="selEmp">Chọn nhân viên: </label>-->
-<!--    <select th:id="selEmp" name="selEmp">-->
-<!--        <option th:each="emp: ${employees}" th:value="${emp.id}" th:text="${emp.fullname}"></option>-->
-<!--    </select>-->
-<!--    <button type="submit">Tìm đơn hàng</button>-->
-<!--</form>-->
+
 <div th:switch="${employees}">
     <h2 th:case="null">Not emplyee yet</h2>
     <div th:case="*">

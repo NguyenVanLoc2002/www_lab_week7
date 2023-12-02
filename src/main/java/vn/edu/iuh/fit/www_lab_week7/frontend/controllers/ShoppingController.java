@@ -37,11 +37,9 @@ public class ShoppingController {
     @GetMapping("/shopping")
     public String showShopping(Model model) {
         List<ProductInfo> productInfoList = productService.findAllProductInfoWithLatestPrice();
-        List<ProductPrice> productPrices = productPriceRepository.findAll();
         List<ProductInfo> productInfos = productInfoList.stream().collect(Collectors.toMap(ProductInfo::getProductId, Function.identity(), (existing, replacement) -> existing)).values().stream().collect(Collectors.toList());
         // Hiển thị thông tin sử dụng Logger
         logger.info("ProductInfos: {}", productInfos);
-        logger.info("ProductPrice: {}", productPrices);
 
         CartItem cartItem = new CartItem();
         model.addAttribute("productInfos", productInfos);

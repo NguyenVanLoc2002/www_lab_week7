@@ -7,7 +7,7 @@
 <body>
 <form action="/orders/date" method="get">
     <label th:for="date">Chọn ngày: </label>
-    <input th:id="date" name="orderDate" type="date">
+    <input th:id="date" name="orderDate" type="date" th:value="${session.orderDate}">
     <button type="submit">Submit</button>
 </form>
 <h2>Danh sách hóa đơn</h2>

@@ -36,7 +36,7 @@ public class OrderService {
 
     public List<Order> findOrdersByEmpIdBetweenOrderDate(LocalDate startDate, LocalDate endDate, Long id){
         return  entityManager.createQuery("select o " +
-                        "from Order o where DATE(o.orderDate) between :startDate and :endDate AND o.employee.id = :employeeId", Order.class)
+                            "from Order o where DATE(o.orderDate) between :startDate and :endDate AND o.employee.id = :employeeId", Order.class)
                 .setParameter("startDate",startDate)
                 .setParameter("endDate",endDate)
                 .setParameter("employeeId",id)

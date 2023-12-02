@@ -25,10 +25,11 @@ public class OrderController {
         return "admin/order/listOrderByOrderDate";
     }
     @GetMapping("/orders/date")
-    public String showOrdersByDate(HttpServletRequest request, Model model){
+    public String showOrdersByDate(HttpServletRequest request, Model model,HttpSession session){
         LocalDate orderDate = LocalDate.parse(request.getParameter("orderDate"));
         List<Order> orderList = orderService.findOrdersByOrderDate(orderDate);
         model.addAttribute("orderList",orderList);
+        session.setAttribute("orderDate",orderDate);
         return "admin/order/listOrderByOrderDate";
     }
 

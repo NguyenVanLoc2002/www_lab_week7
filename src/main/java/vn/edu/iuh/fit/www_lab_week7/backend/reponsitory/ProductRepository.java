@@ -9,7 +9,7 @@ import vn.edu.iuh.fit.www_lab_week7.backend.models.Product;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+    public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT DISTINCT NEW vn.edu.iuh.fit.www_lab_week7.backend.dto.ProductInfo(p.product_id,pi.path, p.name, pp.price) " +
             "FROM ProductImage pi " +
             "JOIN pi.product p " +
