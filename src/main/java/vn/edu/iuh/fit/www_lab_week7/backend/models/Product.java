@@ -29,6 +29,7 @@ public class Product {
     @Column(name = "manufacturer_name", length = 100, nullable = false)
     private String manufacturer;
 
+ 
     @Column(name = "status")
     private ProductStatus status;
 
