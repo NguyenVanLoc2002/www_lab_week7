@@ -12,7 +12,7 @@ I.Phần thiết kế
     + Frontend chứa các lớp Controller
   2.  Thiết kế mối quan hệ giữa các đối tượng
     
-    a) Các lớp 
+    a) Các lớp thông tin đối tượng 
   - employee (emp_id, full_name, dob, email, phone, address, status)
   - product (product_id, name, description, unit, manufacturer_name, status)
   - customer (cust_id, cust_name, email, phone, address)
