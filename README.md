@@ -6,7 +6,7 @@ Trong CartItem lưu trữ ProductInfo và quantity
 
   2. Hiển thị giao diện shopping thì:
 * Trong ShoppingController:
- - Tạo 1 đường dẫn /shopping để chuyển đến trang html user/shopping
+ - Tạo 1 đường dẫn /shopping(http://localhost:8080/shopping) để chuyển đến trang html user/shopping
  - Lấy danh sách Product Info bằng việc viết truy vấn Join 3 bảng product, product_image và product_price ở trong lớp ProductRepository lấy giá của sản phẩm có giá gần với thời điểm hiện tại nhất.
 -->    @Query("SELECT DISTINCT NEW vn.edu.iuh.fit.www_lab_week7.backend.dto.ProductInfo(p.product_id,pi.path, p.name, pp.price) " +
             "FROM ProductImage pi " +
@@ -66,7 +66,7 @@ II.Chọn vào giỏ hàng và thanh toán
 chuyển hướng về lại trang Shopping (do em không làm phần cụ thể thanh toán).
 
 
-III. Trang Admin 
+III. Trang Admin(http://localhost:8080/)
 1. CRUD product
   * Read List Product
 - Ở giao diện chính khi ấn <a th:href="@{/products}">Danh sách sản phẩm</a><br> thì sẽ qua ProductController 
