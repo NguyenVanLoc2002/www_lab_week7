@@ -1,12 +1,53 @@
-# www_lab_week7
-I. Hiển thị các sản phẩm
+# www_lab_week7(Spring Framework)
+I.Phần thiết kế
+  1. Quản lí thư mục
+  - Chia ra làm 2 phần:
+    + Backend tạo các thư mục con:
+      dto
+      enums
+      models: lớp chứa thông tin đối tượng 
+      pks
+      reponsitory: chứa đầy đủ các phương thức xử lý dữ liệu chung nhất
+      services: thực hiện các công việc truy vấn phức tạp được sử dụng ở Controller 
+    + Frontend chứa các lớp Controller
+  2.  Thiết kế mối quan hệ giữa các đối tượng
+    a) Các lớp 
+  - employee (emp_id, full_name, dob, email, phone, address, status)
+  - product (product_id, name, description, unit, manufacturer_name, status)
+  - customer (cust_id, cust_name, email, phone, address)
+  - product_image (product_id, image_id, path, alternative)
+  - order (order_id, order_date, emp_id, cust_id)
+  - order_detail (order_id, product_id, quantity, price, note)
+  - product_price (product_id, price_date_time, price, note
+
+    b) Mối quan hệ
+  - Một product có nhiều image, một image thuộc về một product. Status chỉ trạng thái kinh doanh 
+  của sản phẩm: 1- đang kinh doanh, 0 - tạm ngưng, -1 - không kinh doanh nữa(lớp Enum).
+  - Employee có status: 1- đang làm việc, 0 - tạm nghỉ, -1 – nghỉ việc(lớp Enum).
+  - Một order có nhiều order_detail, một order_detail thuộc về một order.
+  - Một order thuộc về một employee, một employeecó nhiều order.
+  - Một customer có nhiều order, một order chỉ thuộc một customer.
+  - Một product_detail có một giá (price) được lưu trong product_price. Một giá được xác định 
+  bằng product_id và price_date_time. Tại thời điểm lập order, giá được lấy với price_date_time 
+  gần nhất.
+  --> Các mối quan hệ 1-n sử dụng anotaion @OneToMany và @ManyToOne để liên kết giữa các bảng
+    VD: 1 product có nhiều product_image và 1 product_image chỉ thuộc về 1 product
+    Ở Lớp Product:
+      @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+        private List<ProductImage> productImageList = new ArrayList<>();
+    Ở lớp ProductImage:
+      @ManyToOne
+      @JoinColumn(name = "product_id")
+      private Product product;
+
+II. Hiển thị các sản phẩm
   1. Tạo 2 dto ProductInfo và CartItem
 Trong ProductInfo lưu trữ productId, imagePath,name và price của sản phẩm.
 Trong CartItem lưu trữ ProductInfo và quantity
 
   2. Hiển thị giao diện shopping thì:
 * Trong ShoppingController:
- - Tạo 1 đường dẫn /shopping để chuyển đến trang html user/shopping
+ - Tạo 1 đường dẫn /shopping(http://localhost:8080/shopping) để chuyển đến trang html user/shopping
  - Lấy danh sách Product Info bằng việc viết truy vấn Join 3 bảng product, product_image và product_price ở trong lớp ProductRepository lấy giá của sản phẩm có giá gần với thời điểm hiện tại nhất.
 -->    @Query("SELECT DISTINCT NEW vn.edu.iuh.fit.www_lab_week7.backend.dto.ProductInfo(p.product_id,pi.path, p.name, pp.price) " +
             "FROM ProductImage pi " +
@@ -25,7 +66,7 @@ Trong CartItem lưu trữ ProductInfo và quantity
 - Dùng bootstrap để tạo giao diện với mẫu sẵn 
 - Dùng 1 thẻ div với th:each để render ra từng thông tin của ProductInfo trong listProductInfo.
   
-II.Chọn vào giỏ hàng và thanh toán
+III.Chọn vào giỏ hàng và thanh toán
   1. Chọn vào giỏ hàng
    Ở giao diện shopping.html:
 - Tạo 1 form chuyển đến /addToCart với phương thức get để lấy các thông tin của productInfo, chuyển các thông tin này sang /addToCart sau khi nhấn vào button Add to cart
@@ -66,7 +107,7 @@ II.Chọn vào giỏ hàng và thanh toán
 chuyển hướng về lại trang Shopping (do em không làm phần cụ thể thanh toán).
 
 
-III. Trang Admin 
+IV. Trang Admin(http://localhost:8080/)
 1. CRUD product
   * Read List Product
 - Ở giao diện chính khi ấn <a th:href="@{/products}">Danh sách sản phẩm</a><br> thì sẽ qua ProductController 
