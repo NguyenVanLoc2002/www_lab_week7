@@ -11,6 +11,7 @@ I.Phần thiết kế
       services: thực hiện các công việc truy vấn phức tạp được sử dụng ở Controller 
     + Frontend chứa các lớp Controller
   2.  Thiết kế mối quan hệ giữa các đối tượng
+    
     a) Các lớp 
   - employee (emp_id, full_name, dob, email, phone, address, status)
   - product (product_id, name, description, unit, manufacturer_name, status)
